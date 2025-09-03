@@ -1,0 +1,24 @@
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300">
+  <div class="max-w-7xl mx-auto px-4 py-8 md:flex md:items-center md:justify-between">
+    
+    <!-- Left Side -->
+    <div class="text-center md:text-left mb-4 md:mb-0">
+      <h2 class="text-lg font-semibold">📒 Contact Manager</h2>
+      <p class="text-sm text-gray-400">Manage your contacts securely & easily.</p>
+    </div>
+
+    <!-- Right Side Links -->
+    <div class="flex justify-center space-x-6">
+      <a href="dashboard.jsp" class="hover:text-white">Dashboard</a>
+      <a href="add_contact.jsp" class="hover:text-white">Add Contact</a>
+      <a href="profile.jsp" class="hover:text-white">Profile</a>
+      <a href="login.jsp" class="hover:text-white">Login</a>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="border-t border-gray-700 text-center py-4 text-sm text-gray-400">
+    © 2025 Contact Management System. All rights reserved.
+  </div>
+</footer>

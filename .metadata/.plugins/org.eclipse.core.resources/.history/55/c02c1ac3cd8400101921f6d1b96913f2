@@ -1,0 +1,48 @@
+package com.HQL;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import com.tut.Student;
+public class HQLExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session s=factory.openSession();
+		
+		//Read
+//		String query="from Student";//select the all data
+//		String query="from Student where city='Lucknow'";//select the specific data where is is Lucknow
+//		String query="from Student where city=:n";//select the specific data where is city=Lucknow
+//		String query="from Student s where s.city=:n and s.name=:x";//select the specific using aliases data where is city=Lucknow and
+		//name=Ankit Tiwari
+//		Query q=s.createQuery(query);
+//		q.setParameter("n", "Lucknow");
+//		q.setParameter("x", "Ankit Tiwari");
+//		List<Student> l=q.list();
+//		for(Student s1:l) {
+//			System.out.println(s1.getId());
+//			System.out.println(s1.getName());
+//			System.out.println(s1.getCity());
+//			System.out.println(s1.getCerti().getCourse());
+//			System.out.println(s1.getCerti().getDuration());
+//		}
+		
+		//Delete
+		Transaction tx=s.beginTransaction();
+		String query1="delete from Student where city=:c";
+//		String query1="delete from Student as s where s.city=:c";//we can also use alias
+		Query q1=s.createQuery(query1);
+		q1.setParameter("c", "Lucknow");
+		int r=q1.executeUpdate();
+		System.out.println(r);
+		tx.commit();
+		s.close();
+	}
+}

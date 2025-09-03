@@ -1,0 +1,24 @@
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+  <!-- Default page when app loads -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!-- Filter declaration -->
+  <filter>
+    <filter-name>MyFilter</filter-name>
+    <filter-class>com.filter.MyFilter</filter-class>
+  </filter>
+
+  <!-- Filter mapping only for secure folder -->
+  <filter-mapping>
+    <filter-name>MyFilter</filter-name>
+    <url-pattern>/secure/*</url-pattern>
+  </filter-mapping>
+
+</web-app>

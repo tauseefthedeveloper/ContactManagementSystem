@@ -1,0 +1,67 @@
+package com.HQL;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import com.mappings.Questions;
+import com.tut.Student;
+public class HQLExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session s=factory.openSession();
+		
+		//Read
+//		String query="from Student";//select the all data
+//		String query="from Student where city='Lucknow'";//select the specific data where is is Lucknow
+//		String query="from Student where city=:n";//select the specific data where is city=Lucknow
+//		String query="from Student s where s.city=:n and s.name=:x";//select the specific using aliases data where is city=Lucknow and
+		//name=Ankit Tiwari
+//		Query q=s.createQuery(query);
+//		q.setParameter("n", "Lucknow");
+//		q.setParameter("x", "Ankit Tiwari");
+//		List<Student> l=q.list();
+//		for(Student s1:l) {
+//			System.out.println(s1.getId());
+//			System.out.println(s1.getName());
+//			System.out.println(s1.getCity());
+//			System.out.println(s1.getCerti().getCourse());
+//			System.out.println(s1.getCerti().getDuration());
+//		}
+		
+		//Delete
+		Transaction tx=s.beginTransaction();
+//		String query1="delete from Student where city=:c";
+////	String query1="delete from Student as s where s.city=:c";//we can also use alias
+//		Query q1=s.createQuery(query1);
+//		q1.setParameter("c", "Lucknow");
+//		int r=q1.executeUpdate();
+//		System.out.println(r);
+		
+		//Update
+//		String query2="update from Student set city=:newCity where id=:id";
+//		String query2="update from Student set name=:newName where id=:id";
+//		Query q2=s.createQuery(query2);
+//		q2.setParameter("newName", "Tauseef Khan");
+//		q2.setParameter("id",101);
+//		int r=q2.executeUpdate();
+		
+		
+		//Join Query
+		String query3="SELECT q.question, q.id, a.id, a.answer FROM Questions as q INNER JOIN q.answer as a";
+		Query q3=s.createQuery(query3);
+		List<Object[]> list=q3.getResultList();
+		for(Object []arr:list) {
+			System.out.println(Arrays.toString(arr));
+		}
+		tx.commit();
+		s.close();
+	}
+}

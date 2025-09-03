@@ -1,0 +1,27 @@
+package com.SQL;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.NativeQuery;
+
+import com.tut.Student;
+
+public class SQLExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure();
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session session=factory.openSession();
+		String q="Select * from student";
+		NativeQuery nq=session.createSQLQuery(q);
+		List<Object[]> l=nq.list();
+		for(Object[] s:l) {
+			System.out.println(Arrays.toString(s));
+		}
+		session.close();
+		factory.close();
+	}
+}

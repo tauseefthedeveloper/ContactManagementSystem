@@ -1,0 +1,52 @@
+package com.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.entities.User;
+import com.helper.FactoryProvider;
+
+@WebServlet("/Login")
+public class Login extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processReqest(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processReqest(req, resp);
+	}
+	protected void processReqest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String email=req.getParameter("email");
+		String password=req.getParameter("password");
+		boolean f=false;
+		try {
+			Session session=FactoryProvider.getFactory().openSession();
+			Query q=session.createQuery("from User where email=:e",User.class);
+			q.setParameter("e", email);
+			User u=(User) q.uniqueResult();
+			if(u==null) {
+				resp.getWriter().println(f);
+			}else {
+				if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
+					f=true;
+					HttpSession userSession = req.getSession();
+					userSession.setAttribute("user", u);
+					resp.getWriter().println(f);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}

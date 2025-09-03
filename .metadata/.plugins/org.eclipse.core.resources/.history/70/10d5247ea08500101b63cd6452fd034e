@@ -1,0 +1,10 @@
+package com.mappingXML;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class TestPerson {
+	public static void main(String[] args) {
+		SessionFactory factory=new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+	}
+}

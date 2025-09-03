@@ -1,0 +1,30 @@
+package com.HQL;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import com.tut.Student;
+public class HQLExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure();
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session s=factory.getCurrentSession();
+		
+		String query="from Student";
+		Query q=s.createQuery(query);
+		List<Student> l=q.list();
+		for(Student s1:l) {
+			System.out.println(s1.getId());
+			System.out.println(s1.getName());
+			System.out.println(s1.getCity());
+			System.out.println(s1.getCerti().getCourse());
+			System.out.println(s1.getCerti().getDuration());
+		}
+		s.close();
+	}
+}

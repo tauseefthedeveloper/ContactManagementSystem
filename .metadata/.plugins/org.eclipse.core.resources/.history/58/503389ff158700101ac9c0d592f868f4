@@ -1,0 +1,22 @@
+package com.entities;
+@Entity
+@Table(name="contacts")
+public class Contact {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int contactId;
+
+    private String name;
+    private String phone;
+    private String email;
+    private String address;
+    private String notes;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    // getters and setters
+}

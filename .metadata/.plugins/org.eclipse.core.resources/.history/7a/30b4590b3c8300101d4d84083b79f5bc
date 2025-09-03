@@ -1,0 +1,8 @@
+package com.servlets;
+
+import javax.servlet.annotation.WebServlet;
+
+@WebServlet("/SaveNote")
+public class SaveNote {
+
+}

@@ -1,0 +1,65 @@
+package com.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import com.entities.Contact;
+import com.helper.FactoryProvider;
+
+@WebServlet("/EditContacts")
+public class EditContact extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int contactId=Integer.parseInt(req.getParameter("contactId"));
+		int userId=Integer.parseInt(req.getParameter("userId"));
+		String name=req.getParameter("name");
+		String phone=req.getParameter("phone");
+		String email=req.getParameter("email");
+		String address=req.getParameter("address");
+		String notes=req.getParameter("notes");
+		
+		Session session=FactoryProvider.getFactory().openSession();
+		Contact c=(Contact)session.get(Contact.class, contactId);
+		
+		boolean f=false;
+		if(c==null) {
+			resp.getWriter().println(f);
+		}else {
+			Transaction tx=session.beginTransaction();
+			String query="UPDATE Contact set name=:n, phone=:p, email=:e, address=:a, notes=:notes, createdAt=:time WHERE "
+					+ "contactId=:contactId and user_id=:userId";
+			Query q=session.createQuery(query);
+			q.setParameter("n",name);
+			q.setParameter("p", phone);
+			q.setParameter("e", email);
+			q.setParameter("a", address);
+			q.setParameter("notes", notes);
+			q.setParameter("time", new Contact().getCreatedAt());
+			q.setParameter("contactId",contactId);
+			q.setParameter("userId",userId);
+			int result=q.executeUpdate();
+			tx.commit();
+			
+			f=result>0;
+			resp.getWriter().println(f);
+		}
+	}
+}

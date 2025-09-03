@@ -1,0 +1,47 @@
+package com.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+
+import com.entities.User;
+import com.helper.FactoryProvider;
+
+@WebServlet("/Login")
+public class Login extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processReqest(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processReqest(req, resp);
+	}
+	protected void processReqest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String email=req.getParameter("email");
+		String password=req.getParameter("password");
+		boolean f=false;
+		try {
+			Session session=FactoryProvider.getFactory().openSession();
+			User u=(User)session.get(User.class, email);
+			if(u==null) {
+				if(u.getEmail()==email && u.getPassword()==password) {
+					f=true;
+					resp.getWriter().println(f);
+				}else {
+					resp.getWriter().println(f);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		resp.getWriter().println(email+" "+password);
+	}
+	
+}

@@ -1,0 +1,43 @@
+package com.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+
+import com.entities.Contact;
+import com.entities.User;
+import com.helper.FactoryProvider;
+
+@WebServlet("/AddContact")
+public class Contacts extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String name=req.getParameter("name");
+		String phone=req.getParameter("phone");
+		String email=req.getParameter("email");
+		String address=req.getParameter("address");
+		String notes=req.getParameter("notes");
+		System.out.println(name+" "+phone+" "+email+" "+address+" "+notes);
+		User u=(User)req.getAttribute("user");
+		
+		try {
+			Contact contact=new Contact();
+			Session session=FactoryProvider.getFactory().openSession();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}

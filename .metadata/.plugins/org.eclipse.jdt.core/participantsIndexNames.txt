@@ -1,0 +1,7 @@
+INDEX VERSION 1.134
+C:\Users\hp\Desktop\Hibernate Projects\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4006387755.index
+\ContactManagementSystem\src\main\resources
+C:\Users\hp\Desktop\Hibernate Projects\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\265307379.index
+\ContactManagementSystem\src\main\resources
+C:\Users\hp\Desktop\Hibernate Projects\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2389236961.index
+\NoteTaker\src\main\resources

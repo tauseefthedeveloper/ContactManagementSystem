@@ -1,0 +1,50 @@
+<%@page import="com.entities.Note"%>
+<%@page import="java.util.List"%>
+<%@page import="org.hibernate.Query"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="com.helper.FactoryProvider"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Note Taker || All Notes</title>
+<link href="CSS/style.css" rel="stylesheet">
+<link href="image/NoteTaker2.png" rel="icon" type="image/png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100">
+	<div class="container-100">
+		<%@include file="navbar.jsp"%>
+	</div>
+	<div style="font-size:60px" class="container text-xl font-bold text-blue-600 text-center mt-3">
+		<h1>All Notes</h1>
+	</div>
+	<div class="flex items-center justify-center container">
+		<%
+		Session s = FactoryProvider.getFactory().openSession();
+		Query q = s.createQuery("FROM Note",Note.class);
+		List<Note> list = q.list();
+		for (Note n : list) {
+		%>
+	
+	
+		<div >
+			<div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+				<h5
+					class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%=n.getTitle() %></h5>
+				<p class="font-normal text-gray-700 dark:text-gray-400"><%=n.getContent() %></p>
+			</div>
+		</div>
+	
+	
+		<%
+		}
+		s.close();
+		%>
+	</div>
+</body>
+</html>

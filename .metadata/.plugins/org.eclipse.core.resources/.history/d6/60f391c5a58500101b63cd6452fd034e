@@ -1,0 +1,28 @@
+package com.criteria;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
+
+import com.tut.Student;
+
+public class CriteriaExample {
+	public static void main(String[] args) {
+		Session s=new Configuration().configure("hibernate.cfg.xml").buildSessionFactory().openSession();
+		
+		Criteria c=s.createCriteria(Student.class);
+//		c.add(Restrictions.eq("certi.course","Android")); //equal
+//		c.add(Restrictions.gt("id",200)); //greater than
+//		c.add(Restrictions.lt("id",105)); //less than
+		c.add(Restrictions.ilike("certi.course","Java")); //case sensitive
+//		c.add(Restrictions.like("certi.course","java")); //in-case sensitive
+		List<Student> l=c.list();
+		for(Student student:l) {
+			System.out.println(student);
+		}
+		s.close();
+	}
+}

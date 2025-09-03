@@ -1,0 +1,38 @@
+package com.servlets;
+
+import java.io.IOException;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Session;
+
+import com.entities.Note;
+import com.helper.FactoryProvider;
+
+@WebServlet("/SaveNote")
+public class SaveNote extends HttpServlet{
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		processRequest(req, resp);
+	}
+	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			String title=req.getParameter("title");
+			String content=req.getParameter("content");
+			Note note=new Note(title,content,new Date());
+			Session session=FactoryProvider.getFactory().openSession();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}

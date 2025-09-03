@@ -1,0 +1,24 @@
+package com.cache;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import com.tut.Student;
+
+public class SecondLevelCacheExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();;
+		cfg.configure();
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session session=factory.openSession();
+		//by default enabled
+		Student s=session.get(Student.class, 101);
+		System.out.println(s);
+		Student s2=session.get(Student.class, 101);
+		System.out.println(s2);
+		System.out.println(session.contains(s2));
+		session.close();
+		factory.close();
+	}
+}

@@ -1,0 +1,20 @@
+package com.mappingXML;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public class TestPerson {
+	public static void main(String[] args) {
+		SessionFactory factory=new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		Session s=factory.openSession();
+		Transaction tx=s.beginTransaction();
+		
+		Person p=new Person(1,"Tauseef Khan","Delhi","9721523530");
+		s.save(p);
+		tx.commit();
+		s.close();
+		factory.close();
+	}
+}

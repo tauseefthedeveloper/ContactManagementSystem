@@ -1,0 +1,27 @@
+package com.filters;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+
+@WebFilter("/*")   // <-- ye change karo
+public class MyFilter implements Filter {
+    public void init(FilterConfig filterConfig) throws ServletException {
+        System.out.println("Filter Initialized");
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        
+        // Example: check if "user" parameter is present
+        if (request.getParameter("user") == null) {
+            response.getWriter().println("Access Denied - Please login");
+        } else {
+            chain.doFilter(request, response); // allow request to continue
+        }
+    }
+
+    public void destroy() {
+        System.out.println("Filter Destroyed");
+    }
+}

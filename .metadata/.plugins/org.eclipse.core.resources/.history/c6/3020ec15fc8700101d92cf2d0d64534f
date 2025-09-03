@@ -1,0 +1,81 @@
+<%@ page import="java.util.List"%>
+<%@ page import="com.entities.Contact"%>
+<%@ page import="com.entities.User"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Contacts</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+	<div>
+		<%@include file="navbar.jsp"%>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<%
+		User u3=(User)session.getAttribute("user");
+		int userId=u3.getUserId();
+	%>
+	<script>
+	 	$(document).ready(function(){
+			$.ajax({
+				url:"<%= request.getContextPath() %>/ContactList",
+				type:"POST",
+				data:{userId:<%=userId%>},
+				success:function(data){
+					
+				},error:function(){
+					alert("Something went wrong")
+				}
+			})	
+	 	})
+	</script>
+	<div class="max-w-6xl mx-auto p-6">
+		<h1 class="text-2xl font-bold mb-6 text-center text-blue-600">
+			My Contact List</h1>
+
+		<div class="overflow-x-auto bg-white shadow-md rounded-lg">
+			<table class="min-w-full border border-gray-200">
+				<thead class="bg-blue-600 text-white">
+					<tr>
+						<th class="px-6 py-3 text-left">Name</th>
+						<th class="px-6 py-3 text-left">Phone</th>
+						<th class="px-6 py-3 text-left">Email</th>
+						<th class="px-6 py-3 text-left">Address</th>
+						<th class="px-6 py-3 text-left">Notes</th>
+						<th class="px-6 py-3 text-left">Created At</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						List l=(List)session.getAttribute("contact");
+						if(l!=null){
+							for(Contact contacts:l){
+					%>
+					<tr class="border-b hover:bg-gray-50">
+						<td class="px-6 py-3"><%=contacts.getName() %></td>
+						<td class="px-6 py-3"><%=contacts.getName() %></td>
+						<td class="px-6 py-3"><%=contacts.getName() %></td>
+						<td class="px-6 py-3"><%=contacts.getName() %></td>
+						<td class="px-6 py-3"><%=contacts.getName() %></td>
+						<td class="px-6 py-3"><%=contacts.getName() %></td>
+					</tr>
+					<%
+							}
+					    }else{ 
+				    %>
+					<tr>
+						<td colspan="6" class="px-6 py-3 text-center text-gray-500">No
+							contacts found.</td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div>
+		<%@include file="footer.jsp"%>
+	</div>
+</body>
+</html>

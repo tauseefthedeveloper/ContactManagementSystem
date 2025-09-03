@@ -1,0 +1,88 @@
+<%@page import="com.entities.Note"%>
+<%@page import="java.util.List"%>
+<%@page import="org.hibernate.Query"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="com.helper.FactoryProvider"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Note Taker || All Notes</title>
+<link href="CSS/style.css" rel="stylesheet">
+<link href="image/NoteTaker2.png" rel="icon" type="image/png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+<body class="bg-gray-100">
+	<div class="container-100">
+		<%@include file="navbar.jsp"%>
+	</div>
+	<div class="container text-xl font-bold text-blue-600 text-center mt-3">
+		<h1 class="italic" style="font-size:35px;margin:18px;">All Notes</h1>
+	</div>
+	<div class="flex flex-wrap gap-4 justify-center container">
+		<%
+		Session s = FactoryProvider.getFactory().openSession();
+		Query q = s.createQuery("FROM Note ORDER BY addedDate DESC",Note.class);
+		List<Note> list = q.list();
+		for (Note n : list) {
+		%>
+			 <div class="w-80">
+		        <div class="h-48 p-6 bg-white border border-gray-200 rounded-lg shadow-sm 
+		                    hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 
+		                    dark:hover:bg-gray-700 flex flex-col justify-between">
+		            <h5 style="font-size:22px;" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+		                <%=n.getTitle() %>
+		            </h5>
+		            <p class="font-normal text-gray-700 dark:text-gray-400 overflow-hidden">
+		                <%=n.getContent() %>
+		            </p>
+		            <div class="container text-center text-white">
+		            	<a href="edit.jsp?id=<%=n.getId()%>" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+		            	Edit</a>
+		            	<button onclick="DeleteNote(<%=n.getId()%>,event)" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+		            	Delete</button>
+		            </div>
+		        </div>
+    		</div>
+		<%
+		}
+		s.close();
+		%>
+	</div>
+	<script>
+		function DeleteNote(id,event){
+			event.preventDefault();
+			$.ajax({
+				url:'DeleteServlet',
+				type:'POST',
+				data:{id:id},
+				success:function(data){
+					if(data.trim()=="true"){
+						Swal.fire({
+							title:"Note deleted successfully!",
+							icon:"success",
+							draggable:true,
+						}).then(()=>{
+							window.location.reload();
+						})
+					}else if(data.trim()=="false"){
+						Swal.fire("Note can't deleted!");
+					}
+				},error:function(xhr){
+					Swal.fire({
+						title:"Error: " + xhr.status,
+						icon:"error",
+						draggable:true,
+					})	
+				}
+			})
+		}
+	</script>
+</body>
+</html>

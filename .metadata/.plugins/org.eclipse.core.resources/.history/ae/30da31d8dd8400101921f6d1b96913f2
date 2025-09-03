@@ -1,0 +1,34 @@
+package com.pagination;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+import com.tut.Certificate;
+import com.tut.Student;
+
+public class StudentInsertLargeData {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure();
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session s=factory.openSession();
+		
+		//insert large data in db
+		
+		Student s1=new Student();
+		for(int i=104;i<=200;i++) {
+			Transaction tx=s.beginTransaction();
+			s1.setId(i);
+			s1.setCity("lucknow"+i);
+			s1.setName("Peter"+i);
+			s1.setCerti(new Certificate((i+" months"),("Android"+i)));
+			s.save(s1);
+			tx.commit();
+		}
+		
+		s.close();
+		factory.close();
+	}
+}

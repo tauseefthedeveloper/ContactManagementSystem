@@ -1,0 +1,26 @@
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        
+        <!-- Logo -->
+        <div class="text-xl font-bold text-blue-600">Note Taker</div>
+        
+        <!-- Menu Links -->
+        <div class="space-x-6 hidden md:flex">
+          <a href="/NoteTaker" class="text-gray-700 hover:text-blue-600">Home</a>
+          <a href="addNotes.jsp" class="text-gray-700 hover:text-blue-600">Add note</a>
+          <a href="/NoteTaker" class="text-gray-700 hover:text-blue-600">Notes</a>
+          <a href="contact.jsp" class="text-gray-700 hover:text-blue-600">Contact</a>
+        </div>
+
+        <!-- Button -->
+        <div>
+          <a href="#"
+             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,26 @@
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300">
+  <div class="max-w-7xl mx-auto px-4 py-8 md:flex md:items-center md:justify-between">
+    
+    <!-- Left Side -->
+    <div class="text-center md:text-left mb-4 md:mb-0">
+      <h2 class="text-lg font-semibold">Contact Management System</h2>
+      <p class="text-sm text-gray-400">Manage your contacts securely & easily.</p>
+    </div>
+
+    <!-- Right Side Links -->
+    <div class="flex justify-center space-x-6">
+      <a href="#!" class="hover:text-white">Contact List</a>
+      <a href="#!" class="hover:text-white">Add Contact</a>
+      <a href="#!" class="hover:text-white">Edit Contact</a>
+      <a href="#!" class="hover:text-white">Login</a>
+      <a href="#!" class="hover:text-white">Register</a>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="border-t border-gray-700 text-center py-4 text-sm text-gray-400">
+    © 2025 Contact Management System. All rights reserved. <br>
+    Design by Tauseef Khan
+  </div>
+</footer>

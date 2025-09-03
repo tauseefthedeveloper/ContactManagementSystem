@@ -1,0 +1,20 @@
+package com.HQL;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+public class HQLExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure();
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session s=factory.getCurrentSession();
+		
+		String q="from Student";
+		Query q=s.createQuery(q);
+		
+		s.close();
+	}
+}

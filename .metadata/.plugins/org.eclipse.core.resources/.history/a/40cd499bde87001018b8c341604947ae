@@ -1,0 +1,43 @@
+package com.filters;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebFilter("/*")  // sabhi request pe chalega
+public class AuthFilter implements Filter {
+
+    public void init(FilterConfig filterConfig) throws ServletException {
+        System.out.println("AuthFilter Initialized");
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        HttpSession session = req.getSession(false); // existing session check
+
+        String uri = req.getRequestURI();
+
+        // agar user login nahi hai aur login page ya servlet pe nahi hai
+        if ((session == null || session.getAttribute("user") == null) 
+                && !uri.endsWith("login.jsp") 
+                && !uri.endsWith("Login")) {
+            
+            // redirect to login page
+            res.sendRedirect(req.getContextPath() + "/login.jsp");
+        } else {
+            // agar user hai to normal flow
+            chain.doFilter(request, response);
+        }
+    }
+
+    public void destroy() {
+        System.out.println("AuthFilter Destroyed");
+    }
+}

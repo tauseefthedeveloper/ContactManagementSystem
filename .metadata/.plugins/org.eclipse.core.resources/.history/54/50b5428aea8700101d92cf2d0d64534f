@@ -1,0 +1,69 @@
+<!-- Navbar -->
+<%@ page import="com.entities.User"%>
+<nav class="bg-blue-600 text-white shadow-lg">
+	<div class="max-w-7xl mx-auto px-4">
+		<div class="flex justify-between h-16">
+
+			<!-- Logo / Brand -->
+			<div class="flex items-center">
+				<a href="/ContactManagementSystem"
+					class="text-xl font-bold tracking-wide">Contact Mangement
+					System</a>
+			</div>
+
+			<!-- Links -->
+			<div class="hidden md:flex items-center space-x-6">
+				<a href="contactList.jsp" class="hover:text-gray-200">Contact
+					List</a> <a href="AddContact.jsp" class="hover:text-gray-200">Add
+					Contact</a>
+				<%
+				User user1 = (User) session.getAttribute("user");
+				if (user1 == null) {
+				%>
+				<a href="login.jsp"
+					class="bg-red-500 px-3 py-1 rounded-lg hover:bg-red-600">Login</a>
+				<a href="register.jsp"
+					class="bg-green-500 px-3 py-1 rounded-lg hover:bg-green-600">Register</a>
+				<%
+				} else {
+				%>
+				<a id="logout" href="#!"
+					class="bg-red-500 px-3 py-1 rounded-lg hover:bg-red-600">Logout</a>
+				<a href="#!"
+					class="bg-green-500 px-3 py-1 rounded-lg hover:bg-green-600"><%=user1.getName()%></a>
+				<%
+				}
+				%>
+			</div>
+		</div>
+	</div>
+
+</nav>
+
+<!-- Script for Mobile Menu -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$('#logout').on('click', function (event) {
+    event.preventDefault();
+    $('#logout').html("<i class='fa fa-spinner fa-spin'></i>");
+    $.ajax({
+        url: '<%= request.getContextPath() %>/Logout', // dynamic path
+        type: 'POST',
+        success: function (data) {
+            if (data.trim() === "true") {
+                alert("Logout Successfully!");
+                window.location.href = "index.jsp";
+            } else {
+                alert("Server response: " + data);
+            }
+        },
+        error: function (xhr, status, error) {
+            $('#submitBtn').text("Logout");
+
+            alert("Something went wrong! " + status + " - " + error);
+        }
+    });
+});
+
+	</script>

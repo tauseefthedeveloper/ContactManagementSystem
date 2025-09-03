@@ -1,0 +1,62 @@
+<!-- Clean Light Footer -->
+<footer class="bg-gray-50 border-t border-gray-200 mt-16">
+	<div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-10">
+
+		<!-- Brand -->
+		<div>
+			<h2 class="text-2xl font-bold text-blue-600 mb-3">NoteTaker</h2>
+			<p class="text-gray-600 text-sm">A simple, modern note-taking app
+				to keep your ideas safe and organized.</p>
+		</div>
+
+		<!-- Quick Links -->
+		<div>
+			<h3 class="text-lg font-semibold text-gray-900 mb-3">Quick Links</h3>
+			<ul class="space-y-2">
+				<li><a href="index.jsp"
+					class="text-gray-600 hover:text-blue-600">Home</a></li>
+				<li><a href="allNotes.jsp"
+					class="text-gray-600 hover:text-blue-600">All Notes</a></li>
+				<li><a href="about.jsp"
+					class="text-gray-600 hover:text-blue-600">About</a></li>
+				<li><a href="contact.jsp"
+					class="text-gray-600 hover:text-blue-600">Contact</a></li>
+			</ul>
+		</div>
+
+		<!-- Resources -->
+		<div>
+			<h3 class="text-lg font-semibold text-gray-900 mb-3">Resources</h3>
+			<ul class="space-y-2">
+				<li><a href="#" class="text-gray-600 hover:text-blue-600">Privacy
+						Policy</a></li>
+				<li><a href="#" class="text-gray-600 hover:text-blue-600">Terms
+						& Conditions</a></li>
+				<li><a href="#" class="text-gray-600 hover:text-blue-600">Help
+						Center</a></li>
+			</ul>
+		</div>
+
+		<!-- Social Media -->
+		<div>
+			<h3 class="text-lg font-semibold text-gray-900 mb-3">Follow Us</h3>
+			<div class="flex gap-4 text-gray-600 text-xl">
+				<a href="#" class="hover:text-blue-600"><i
+					class="fab fa-facebook"></i></a> <a href="#"
+					class="hover:text-blue-600"><i class="fab fa-twitter"></i></a> <a
+					href="#" class="hover:text-blue-600"><i
+					class="fab fa-instagram"></i></a> <a href="#"
+					class="hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bottom Bar -->
+	<div
+		class="bg-white border-t border-gray-200 py-4 text-center text-sm text-gray-500">
+		© 2025 NoteTaker Design by Tauseef Khan</div>
+</footer>
+
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js"
+	crossorigin="anonymous"></script>

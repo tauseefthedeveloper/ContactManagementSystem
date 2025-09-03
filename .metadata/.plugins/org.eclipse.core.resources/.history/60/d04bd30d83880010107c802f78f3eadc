@@ -1,0 +1,207 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.entities.Contact"%>
+<%@ page import="com.entities.User"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Management System || My Contacts</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+	<div>
+		<%@include file="navbar.jsp"%>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<%
+	User u3 = (User) session.getAttribute("user");
+	int userId = u3 != null ? u3.getUserId() : 0;
+	%>
+	<div class="max-w-6xl mx-auto p-6 mb-2">
+		<h1
+			class="text-3xl font-extrabold mb-6 text-center text-blue-700 tracking-wide">
+			My Contacts</h1>
+
+		<div class="overflow-hidden bg-white shadow-lg rounded-xl">
+			<table
+				class="min-w-full border border-gray-200 divide-y divide-gray-200">
+				<thead
+					class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+					<tr>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Name</th>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Phone</th>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Email</th>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Address</th>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Notes</th>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Added
+							Date</th>
+						<th class="px-6 py-3 text-left font-semibold uppercase">Action</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-gray-100">
+					<%
+					List<Contact> l = (List<Contact>) session.getAttribute("contacts");
+					if (l != null && !l.isEmpty()) {
+						for (Contact c : l) {
+					%>
+					<tr class="hover:bg-blue-50 transition">
+						<td id="name" class="px-6 py-4 font-medium text-gray-900"><%=c.getName()%></td>
+						<td id="phone" class="px-6 py-4 text-gray-700"><%=c.getPhone()%></td>
+						<td id="email" class="px-6 py-4 text-gray-700"><%=c.getEmail()%></td>
+						<td id="address" class="px-6 py-4 text-gray-700"><%=c.getAddress()%></td>
+						<td id="notes" class="px-6 py-4 text-gray-700"><%=c.getNotes()%></td>
+						<td class="px-6 py-4 text-gray-500 text-sm"><%=c.getCreatedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))%></td>
+						<td class="px-6 py-4 text-gray-500 text-sm flex space-x-2">
+							<button onclick="onEdit(this)" 
+								data-id="<%=c.getContactId()%>"
+							    data-name="<%=c.getName()%>"
+							    data-phone="<%=c.getPhone()%>"
+							    data-email="<%=c.getEmail()%>"
+							    data-address="<%=c.getAddress()%>"
+							    data-notes="<%=c.getNotes()%>"
+							        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+							    Edit
+							</button>
+							<button onclick="onDelete('<%=c.getContactId()%>', this, event)"
+								class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">
+								Delete</button>
+						</td>
+					</tr>
+					<%
+					}
+					} else {
+					%>
+					<tr>
+						<td colspan="6" class="px-6 py-6 text-center text-gray-500 italic">
+							No contacts found</td>
+					</tr>
+					<%
+					}
+					%>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Edit Contact Modal -->
+	<div id="editModal"
+		class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+		<div class="bg-white rounded-xl w-1/3 p-6 relative">
+			<h2 class="text-2xl font-bold mb-4 text-center text-blue-700">Edit
+				Contact</h2>
+			<form id="editForm">
+				<input type="hidden" id="editContactId">
+
+				<div class="mb-4">
+					<label class="block mb-1 font-semibold">Name</label> <input
+						type="text" id="editName"
+						class="w-full border border-gray-300 rounded px-3 py-2" required>
+				</div>
+
+				<div class="mb-4">
+					<label class="block mb-1 font-semibold">Phone</label> <input
+						type="text" id="editPhone"
+						class="w-full border border-gray-300 rounded px-3 py-2" required>
+				</div>
+
+				<div class="mb-4">
+					<label class="block mb-1 font-semibold">Email</label> <input
+						type="email" id="editEmail"
+						class="w-full border border-gray-300 rounded px-3 py-2" required>
+				</div>
+
+				<div class="mb-4">
+					<label class="block mb-1 font-semibold">Address</label> <input
+						type="text" id="editAddress"
+						class="w-full border border-gray-300 rounded px-3 py-2">
+				</div>
+
+				<div class="mb-4">
+					<label class="block mb-1 font-semibold">Notes</label>
+					<textarea id="editNotes"
+						class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+				</div>
+
+				<div class="flex justify-end space-x-2">
+					<button type="button" onclick="closeEditModal()"
+						class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Cancel</button>
+					<button type="submit"
+						class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+				</div>
+			</form>
+			<button onclick="closeEditModal()"
+				class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+		</div>
+	</div>
+
+	<div>
+		<%@include file="footer.jsp"%>
+	</div>
+	<script>
+	 	$(document).ready(function(){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/ContactList",
+				type : "POST",
+				data : {
+				userId :<%=userId%>},
+				success : function(data) {
+
+				},
+				error : function() {
+					alert("Something went wrong")
+				}
+			})
+		})
+	</script>
+	<script>
+	function onDelete(contactId, btn, event){
+	    event.preventDefault();
+	    $(btn).html("<i class='fa fa-spinner fa-spin'></i>");
+	    
+	    $.ajax({
+	        url: '<%=request.getContextPath()%>/ContactDelete',
+				type : 'POST',
+				data : {
+					contactId : contactId
+				},
+				success : function(data) {
+					if (data.trim() == "true") {
+						alert("Contact Deleted!");
+						$(btn).text("Delete");
+						location.reload();
+					} else {
+						$(btn).text("Delete");
+						alert("Contact not deleted!");
+					}
+				},
+				error : function() {
+					$(btn).text("Delete");
+					alert("Something went wrong");
+				}
+			});
+		}
+
+		function onEdit(contactId, event) {
+			let name=$(btn).data('name')
+			let phone=$(btn).data('phone')
+			let email=$(btn).data('email')
+			let address=$(btn).data('address')
+			let notes=$(btn).data('notes')
+		    $('#editName').val(name);
+		    $('#editPhone').val(phone);
+		    $('#editEmail').val(email);
+		    $('#editAddress').val(address);
+		    $('#editNotes').val(notes);
+
+			$("#editModal").removeClass("hidden");
+		}
+		
+		function closeEditModal() {
+		    $("#editModal").addClass("hidden");
+		}
+	</script>
+</body>
+</html>

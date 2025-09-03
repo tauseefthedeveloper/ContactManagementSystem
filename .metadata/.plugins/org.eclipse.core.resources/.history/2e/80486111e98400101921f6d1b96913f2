@@ -1,0 +1,44 @@
+package com.casecade;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import com.mappings.Answers;
+import com.mappings.Questions;
+
+public class CasecadingExample {
+	public static void main(String[] args) {
+		Configuration cfg=new Configuration();
+		cfg.configure();
+		SessionFactory factory=cfg.buildSessionFactory();
+		Session session=factory.openSession();
+		
+		Questions q1=new Questions();
+		q1.setId(102);
+		q1.setQuestion("What is casecading in Hibernate?");
+		
+		Answers a1=new Answers();
+		a1.setId(204);
+		a1.setAnswer("Casecading is very important in Hibernate");
+		
+		Answers a2=new Answers();
+		a2.setId(204);
+		a2.setAnswer("Casecading is very important in Hibernate");
+		
+		Answers a3=new Answers();
+		a3.setId(204);
+		a3.setAnswer("Casecading is very important in Hibernate");
+		
+		List<Answers> l=new ArrayList<>();
+		l.add(a1);
+		l.add(a2);
+		l.add(a3);
+		q1.setAnswer(l);
+		session.close();
+		factory.close();
+	}
+}

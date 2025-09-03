@@ -1,0 +1,13 @@
+package com.helper;
+
+import org.hibernate.SessionFactory;
+
+public class FactoryProvider {
+	public static SessionFactory factory=null;
+	public static getFactory() {
+		if(factory==null) {
+			
+		}
+		return factory;
+	}
+}

@@ -1,0 +1,57 @@
+<%@page import="com.entities.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Contact Management System || Home page</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+	<div>
+		<%@include file="navbar.jsp"%>
+	</div>
+	<div
+		class="h-screen bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 flex items-center justify-center">
+		<div class="text-center text-white px-6">
+
+			<!-- Title -->
+			<h1 class="text-5xl font-extrabold mb-4 drop-shadow-lg">📒
+				Contact Management System</h1>
+
+			<!-- Subtitle -->
+			<p class="text-lg mb-8 max-w-xl mx-auto">Manage all your contacts
+				in one place — secure, simple, and fast. Add, edit, search, and
+				organize your contacts with ease.</p>
+
+			<!-- Buttons -->
+			<div class="space-x-4">
+				<%
+				User user=(User)session.getAttribute("user");
+				if(user==null){
+				%>
+				<a href="login.jsp"
+					class="bg-white text-blue-600 font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-gray-200 transition">
+					Login </a> <a href="register.jsp"
+					class="bg-yellow-400 text-gray-900 font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-yellow-300 transition">
+					Register </a>
+				<%}else{ %>
+					<a href="#!"
+					class="bg-white text-blue-600 font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-gray-200 transition">
+					Start you journey with us </a> <a href="AddContact.jsp"
+					class="bg-yellow-400 text-gray-900 font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-yellow-300 transition">
+					Add Contacts </a>
+				<%} %>
+			</div>
+		</div>
+	</div>
+	<div>
+	  <%@include file="footer.jsp" %>
+	</div>
+
+</body>
+</html>
